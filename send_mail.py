@@ -170,7 +170,7 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None,
                 raise
 
     if custom_headers:
-        for k, v in custom_headers.iteritems():
+        for k, v in six.iteritems(custom_headers):
             mail.add_header(k, v)
 
     all_destinations = []
@@ -181,15 +181,18 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None,
     if bcc:
         all_destinations.extend(bcc)
 
-
     host = kwargs.get('host', None) or os.getenv('SMTP_HOST')
     port = kwargs.get('port', None) or os.getenv('SMTP_PORT')
     port = int(port)
     username = kwargs.get('username', None) or os.getenv('SMTP_USERNAME')
     password = kwargs.get('password', None) or os.getenv('SMTP_PASSWORD')
+    use_tls = kwargs.get('use_tls', False) or os.getenv('SMTP_USE_TLS', False)
+
     if six.PY2:
         password = six.binary_type(password)
-    use_tls = kwargs.get('use_tls', None) or os.getenv('SMTP_USE_TLS')
+
+    if use_tls in ("False", "false"):
+        use_tls = False
 
     try:
         # this doesn't support `with` statement so we do `close` the old way.

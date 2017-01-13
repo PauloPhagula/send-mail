@@ -28,10 +28,12 @@ def cheap_dot_env(dot_env_path):
                 line = line.strip()
                 if len(line) == 0 or line.startswith(';') or line.startswith('#'):
                     continue
+                var = line.replace('"', '')
                 var = line.strip().split('=')
                 if len(var) == 2:
-                    os.putenv(var[0], var[1].strip())
-                    os.environ[var[0]] = var[1].strip()
+                    key = var[0]
+                    value = var[1].replace('"', '').strip()
+                    os.environ[key] = value
     else:
         raise Exception('no dot env file')
 
