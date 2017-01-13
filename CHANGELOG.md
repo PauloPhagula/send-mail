@@ -3,6 +3,10 @@
 For a complete view of all the releases, visit the releases page on GitHub:
 [https://github.com/dareenzo/send_mail/releases](https://github.com/dareenzo/send_mail/releases)
 
+## v0.3.0 - 2017-01-13
+
+- Allow debugging
+
 ## v0.2.0 - 2017-01-13
 
 - Allow connecting to server with SSL

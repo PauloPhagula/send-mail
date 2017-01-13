@@ -7,8 +7,7 @@ from __future__ import unicode_literals, print_function
 import os
 import sys
 import codecs
-from email.utils import parseaddr
-from setuptools import setup, find_packages
+from setuptools import setup
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py register')
@@ -27,7 +26,7 @@ LONG_DESCRIPTION = '\n'.join([file_get_contents('README.md'), file_get_contents(
 
 setup(
     name='send_mail',
-    version='0.2.0',
+    version='0.3.0',
     description='Simple email sending module for use in ETL/reporting script.',
     long_description=LONG_DESCRIPTION,
     url='https://github.com/dareenzo/send_mail',

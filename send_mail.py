@@ -188,6 +188,7 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None,
     password = kwargs.get('password', None) or os.getenv('SMTP_PASSWORD')
     use_tls = kwargs.get('use_tls', False) or os.getenv('SMTP_USE_TLS', False)
     use_ssl = kwargs.get('use_ssl', False) or os.getenv('SMTP_USE_SSL', False)
+    debug = kwargs.get('debug', False) or os.getenv('SMTP_DEBUG', False)
 
     if six.PY2:
         password = six.binary_type(password)
@@ -198,12 +199,21 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None,
     if use_ssl in ("False", "false"):
         use_ssl = False
 
+    if debug in ("False", "false"):
+        debug = False
+
     try:
         # this doesn't support `with` statement so we do `close` the old way.
         mail_server = smtplib.SMTP_SSL(host, port) if use_ssl else smtplib.SMTP(host, port)
+
+        if debug:
+            mail_server.set_debuglevel(1)
+
         mail_server.ehlo()
+
         if use_tls:
             mail_server.starttls()
+
         mail_server.ehlo()
         mail_server.login(username, password)
         mail_server.sendmail(subject, list(map(lambda x: x[1], all_destinations)), mail.as_string())
