@@ -34,7 +34,7 @@ if six.PY3:
 MAIL_ADDRESS_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b', re.I)
 
 
-def is_valid_mail_address(address):
+def _is_valid_mail_address(address):
     """Verifies if email address is valid"""
     if not address:
         return False
@@ -49,16 +49,16 @@ def is_valid_mail_address(address):
             len(address) != 2
             or not isinstance(address[0], (six.string_types, bool))
             or not isinstance(address[1], six.string_types)
-            or not is_valid_mail_address(address[1])
+            or not _is_valid_mail_address(address[1])
     ):
         return False
 
     return True
 
 
-def parse_mail_address(address):
+def _parse_mail_address(address):
     """Makes email address into parseable format"""
-    if not is_valid_mail_address(address):
+    if not _is_valid_mail_address(address):
         raise Exception('cannot make parseable mail address: "%s" from invalid address' % address)
 
     if isinstance(address, six.string_types):
@@ -68,14 +68,14 @@ def parse_mail_address(address):
         return address
 
 
-def parse_multiple_mail_addresses(addresses):
+def _parse_multiple_mail_addresses(addresses):
     """Parses multiple mail addresses into final format"""
     addresses = addresses if isinstance(addresses, list) else list(map(six.text_type.strip, addresses.split(',')))
     for key, mail_address in enumerate(addresses):
-        if not is_valid_mail_address(mail_address):
+        if not _is_valid_mail_address(mail_address):
             raise Exception('Invalid Address: "%s"' % six.text_type(mail_address))
         else:
-            addresses[key] = parse_mail_address(mail_address)
+            addresses[key] = _parse_mail_address(mail_address)
 
     return addresses
 
@@ -165,23 +165,23 @@ def send_mail(subject,
     # 1. Parse and Validate Email Addresses
 
     if sender:
-        sender = parse_mail_address(sender)
+        sender = _parse_mail_address(sender)
 
     if reply_to:
-        reply_to = parse_mail_address(reply_to)
+        reply_to = _parse_mail_address(reply_to)
 
     all_destinations = []
 
     if to:
-        to = parse_multiple_mail_addresses(to)
+        to = _parse_multiple_mail_addresses(to)
         all_destinations.extend(to)
 
     if cc:
-        cc = parse_multiple_mail_addresses(cc)
+        cc = _parse_multiple_mail_addresses(cc)
         all_destinations.extend(cc)
 
     if bcc:
-        bcc = parse_multiple_mail_addresses(cc)
+        bcc = _parse_multiple_mail_addresses(cc)
         all_destinations.extend(bcc)
 
     if len(all_destinations) == 0:
