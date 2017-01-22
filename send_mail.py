@@ -6,12 +6,11 @@
 
     Email sending module for scripts.
 
-    :copyright: (c) 2017 by Paulo Phagula.
-    :license: MIT, see LICENSE for more details.
+    :copyright: Copyright 2017 by Paulo Phagula.
+    :license: MIT, see LICENSE for details.
 """
 from __future__ import unicode_literals, print_function
 import os
-import logging
 import re
 import smtplib
 from email.utils import COMMASPACE, formatdate, formataddr
@@ -57,7 +56,7 @@ def is_valid_mail_address(address):
     return True
 
 
-def to_parseable_mail_address(address):
+def parse_mail_address(address):
     """Makes email address into parseable format"""
     if not is_valid_mail_address(address):
         raise Exception('cannot make parseable mail address: "%s" from invalid address' % address)
@@ -69,60 +68,131 @@ def to_parseable_mail_address(address):
         return address
 
 
-def send_mail(to, subject, message, is_html=False, cc=None, bcc=None,
-              reply_to=None, attachments=None, sender=None, text=None,
-              custom_headers=None, **kwargs):
+def parse_multiple_mail_addresses(addresses):
+    """Parses multiple mail addresses into final format"""
+    addresses = addresses if isinstance(addresses, list) else list(map(six.text_type.strip, addresses.split(',')))
+    for key, mail_address in enumerate(addresses):
+        if not is_valid_mail_address(mail_address):
+            raise Exception('Invalid Address: "%s"' % six.text_type(mail_address))
+        else:
+            addresses[key] = parse_mail_address(mail_address)
+
+    return addresses
+
+
+def send_mail(subject,
+              message='', html_message='',
+              to=None, cc=None, bcc=None,
+              sender=None, reply_to=None,
+              attachments=None,
+              custom_headers=None,
+              logger=None,
+              **kwargs):
     """Send an outgoing email with the given parameters.
 
     Single emails addresses can be provided a string `'email@example.com'`
-    or tuples of `('Example', 'email@example.com'')`
+    or tuples `('Example', 'email@example.com'')`
 
     Multiple email addresses can be provided CSV `'email@example.com, email2@example.com'`
     or lists mixing singular address style `['email@example.com', (Example, email@example.com)]`
 
-    By default emails are considered to be in plain-text format, but one can change
-    them to HTML by passing `is_html=True`.
+    By default emails are considered to be in plain-text format, but one
+    can change them to HTML by passing `is_html=True`.
 
-    When sending an HTML email a plain-text fallback can be provided with the
-    `text` parameter, and if a fallback is not provided the conversion will be
-    done for you based on the HTML message.
+    When sending an HTML email a plain-text fallback can be provided
+    with the `text` parameter, and if a fallback is not provided the
+    conversion will be done for you based on the HTML message.
 
-    Attachments can be passed as a CSV string with full paths to the desired files.
+    Attachments can be passed as a CSV string with full paths to the
+    desired files.
+
+    Args:
+        subject (:obj:`str`): Subject line for this e-mail message.
+        message (:obj:`str`): Plain-text message body.
+        message_html (:obj:`str`): HTML message body.
+        to: Recipients address collection
+        cc: Carbon Copy (CC) recipients address collection
+        bcc: Blind Carbon Copy (BCC) recipients address collection
+        sender: Sender email address as it appears in the 'From' email line.
+        reply_to: List of addresses to reply to for the mail message.
+        attachments: Attachments collection used to store data
+            attached to this e-mail message.
+        custom_headers (:obj:`dict`, optional): Custom Headers to be added to the mail.
+        logger (:obj:`logging.Logger`,optional): Logger instance for logging
+            error and debug messages.
+        **kwargs: Arbitrary keywords arguments
+
+            If any of them is not provided they will be taken from
+            their environment variables equivalents (SMTP_<KEYWORD>) or
+            use default values.
+
+            - host (:obj:`str`, optional): mail server host. If not given uses :envvar:`SMTP_HOST`.
+            - port (:obj:`str` or :obj:`int`, optional): mail server port. If not given uses :envvar:`SMTP_PORT`.
+            - username (:obj:`str`, optional): mail server password. If not given uses :envvar:`SMTP_USERNAME`.
+            - password (:obj:`str`, optional): mail server password. If not given uses :envvar:`SMTP_PASSWORD`.
+            - use_tls (:obj:`bool`, optional): connect using TLS flag. If not given uses :envvar:`SMTP_USE_TLS`. Defaults to False
+            - use_ssl (:obj:`bool`, optional): connect using SSL flag. If not given uses :envvar:`SMTP_USE_SSL`.  Defaults to False
+            - debug (:obj:`bool`, optional): debug mode enabling flag. If not given uses :envvar:`SMTP_DEBUG`.Defaults to False
+
+    Raises:
+        ValueError: if no recepient is given or no message is given.
+
+    .. envvar:: SMTP_HOST
+        Mail server host.
+
+    .. envvar:: SMTP_PORT
+        Mail server port.
+
+    .. envvar:: SMTP_USERNAME
+        Mail server username for login.
+
+    .. envvar:: SMTP_PASSWORD
+        Mail server password for login.
+
+    .. envvar:: SMTP_USE_TLS
+        Flag indicating if connection should be made using TLS.
+
+    .. envvar:: SMTP_USE_SSL
+        Flag indicating if connection to server should be made using SSL.
+
+    .. envvar:: SMTP_DEBUG
+        Flag indicating if debug mode is enabled.abs
+
+    .. todo::
+        Allow many addresses in `reply_to`
     """
+
+    # 1. Parse and Validate Email Addresses
+
+    if sender:
+        sender = parse_mail_address(sender)
+
+    if reply_to:
+        reply_to = parse_mail_address(reply_to)
+
+    all_destinations = []
+
+    if to:
+        to = parse_multiple_mail_addresses(to)
+        all_destinations.extend(to)
+
+    if cc:
+        cc = parse_multiple_mail_addresses(cc)
+        all_destinations.extend(cc)
+
+    if bcc:
+        bcc = parse_multiple_mail_addresses(cc)
+        all_destinations.extend(bcc)
+
+    if len(all_destinations) == 0:
+        raise ValueError('At least one recipient must be specified')
+
+    # 2. Setup email object with basic details
+
     mail = MIMEMultipart()
     body = MIMEMultipart('alternative')
 
-    logger = logging.getLogger()
     html2text_converter = html2text.HTML2Text()
-
-    if sender:
-        sender = to_parseable_mail_address(sender)
-
-    if reply_to:
-        reply_to = to_parseable_mail_address(reply_to)
-
-    to = to if isinstance(to, list) else list(map(six.text_type.strip, to.split(',')))
-    for key, mail_address in enumerate(to):
-        if not is_valid_mail_address(mail_address):
-            raise Exception('Invalid Address "%s" in To' % six.text_type(mail_address))
-        else:
-            to[key] = to_parseable_mail_address(mail_address)
-
-    if cc:
-        cc = cc if isinstance(cc, list) else list(map(six.text_type.strip, cc.split(',')))
-        for key, mail_address in enumerate(cc):
-            if not is_valid_mail_address(mail_address):
-                raise Exception('Invalid Address: "%s" in Cc' % six.text_type(mail_address))
-            else:
-                cc[key] = to_parseable_mail_address(mail_address)
-
-    if bcc:
-        bcc = bcc if isinstance(bcc, list) else list(map(six.text_type.strip, bcc.split(',')))
-        for key, mail_address in enumerate(bcc):
-            if not is_valid_mail_address(mail_address):
-                raise Exception('Invalid Address: "%s" in Bcc' % six.text_type(mail_address))
-            else:
-                bcc[key] = to_parseable_mail_address(mail_address)
 
     if sender:
         mail['From'] = formataddr(sender)
@@ -140,24 +210,35 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None,
     mail['Subject'] = subject
     mail.preamble = subject
 
-    if not is_html:
-        body.attach(MIMEText(message, 'plain', 'utf-8'))
-    else:
-        if text:
-            body.attach(MIMEText(text, 'plain', 'utf-8'))
-        else:
-            body.attach(MIMEText(html2text_converter.handle(message), 'plain', 'utf-8'))
+    # We must always attach plain text mail before html, otherwise we
+    # break gmail
 
-        body.attach(MIMEText(message, 'html', 'utf-8'))
+    if message and not isinstance(message, six.text_type):
+        raise ValueError('message must be a string')
+
+    if html_message and not isinstance(html_message, six.text_type):
+        raise ValueError('message must be a string')
+
+    if html_message and not message:
+        message = html2text_converter.handle(message)
+
+    if message:
+        body.attach(MIMEText(message, 'plain', 'utf-8'))
+
+    if html_message:
+        body.attach(MIMEText(html_message, 'html', 'utf-8'))
 
     mail.attach(body)
+
+    # 3. Add attachments to email
 
     if attachments:
         attachments = attachments if isinstance(attachments, list) else list(map(six.text_type.strip, attachments.split(',')))
         for file_path in attachments:
             try:
                 if not os.path.isfile(file_path):
-                    raise Exception('File for attachment "%s" not found in file system' % six.text_type(file_path))
+                    raise ValueError('File for attachment "%s" not found in file system' % six.text_type(file_path))
+
                 with open(file_path, 'rb') as f:
                     attachment = MIMEBase('application', "octet-stream")
                     attachment.set_payload(f.read())
@@ -166,20 +247,17 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None,
                     attachment.add_header('Content-Disposition', 'attachment; filename="%s"' % file_name)
                     mail.attach(attachment)
             except Exception as ex:
-                logger.error("Unable to open one of the attachments. Error: %s" % six.text_type(ex))
+                if logger is not None:
+                    logger.error("Unable to open one of the attachments. Error: %s" % six.text_type(ex))
                 raise
+
+    # 4. Add custom headers to email
 
     if custom_headers:
         for k, v in six.iteritems(custom_headers):
             mail.add_header(k, v)
 
-    all_destinations = []
-    if to:
-        all_destinations.extend(to)
-    if cc:
-        all_destinations.extend(cc)
-    if bcc:
-        all_destinations.extend(bcc)
+    # 5. Connect to mail server and send email
 
     host = kwargs.get('host', None) or os.getenv('SMTP_HOST')
     port = kwargs.get('port', None) or os.getenv('SMTP_PORT')
@@ -220,5 +298,6 @@ def send_mail(to, subject, message, is_html=False, cc=None, bcc=None,
         # Should be mailServer.quit(), but that crashes...
         mail_server.close()
     except Exception as ex:
-        logger.error("Unable to send the email. Error: %s" % str(ex))
+        if logger is not None:
+            logger.error("Unable to send the email. Error: %s" % str(ex))
         raise

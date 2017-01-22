@@ -15,16 +15,13 @@ indent_style = space
 indent_size = 4
 max_line_length = 80
 
-[{*.txt}]
-end_of_line = crlf
-
 [*.sh]
 end_of_line = lf
 
-[*.{cmd, bat}]
+[*.{cmd, bat, txt}]
 end_of_line = crlf
 
-[*.md, *.diff]
+[*.{md, rst, diff}]
 trim_trailing_whitespace = false
 
 [{*.json, *.yml, *.xml, *.eslintrc, *.csslintrc, *.html}]

@@ -1,0 +1,15 @@
+language: python
+python:
+  - "2.7"
+  - "3.5"
+env:
+  - TEST_ENV=travis
+install:
+  - pip install -r requirements/dev.txt
+  - pip install coveralls
+script:
+  - python -m unittest test_send_mail
+  - coverage run --source=send_mail -m unittest test_send_mail
+after_success: coveralls
+
+

@@ -7,6 +7,10 @@ import codecs
 
 from send_mail import send_mail
 
+
+PLAINTEXT_EMAIL = """
+Yo...
+"""
 EMAIL_TEMPLATE = """
 <html>
     <head></head>
@@ -22,6 +26,7 @@ EMAIL_TEMPLATE = """
 
 
 def cheap_dot_env(dot_env_path):
+    """Help fn to load constants from file into env vars"""
     if os.path.exists(dot_env_path):
         with codecs.open(dot_env_path, encoding='utf-8') as f:
             for line in f:
@@ -41,20 +46,21 @@ def cheap_dot_env(dot_env_path):
 class MailTestCase(unittest.TestCase):
 
     def setUp(self):
-        cheap_dot_env(os.path.join(os.path.abspath(os.path.dirname(__file__)), '.env'))
+        if not os.getenv('TEST_ENV') == 'travis':
+            cheap_dot_env(os.path.join(os.path.abspath(os.path.dirname(__file__)), '.env'))
 
     def test_full_email_is_sent(self):
         send_mail(
-            [('To Example', 'to@example.com'), 'you@example.com'],
             '[Mail Test] I should be delivered to the inbox',
-            EMAIL_TEMPLATE,
-            is_html=True,
+            message=PLAINTEXT_EMAIL,
+            html_message=EMAIL_TEMPLATE,
+            to=[('To Example', 'to@example.com'), 'you@example.com'],
             cc='him@example.com, her@example.com',
             bcc=['them@example.com', ('You Know Who', 'youknowwho@example.com')],
             sender=('App', 'notifications@example.com'),
             reply_to='no-reply@example.com',
             attachments=[os.path.abspath(os.path.dirname(__file__)) + '/LICENSE',
-                         os.path.abspath(os.path.dirname(__file__)) + '/README.md']
+                         os.path.abspath(os.path.dirname(__file__)) + '/README.rst']
         )
 
     def test_full_email_is_sent_with_details_as_keywords(self):
@@ -66,10 +72,10 @@ class MailTestCase(unittest.TestCase):
         use_tls = os.getenv('SMTP_USE_TLS')
 
         send_mail(
-            [('To Example', 'to@example.com'), 'you@example.com'],
             '[Mail Test] I should be delivered to the inbox',
-            EMAIL_TEMPLATE,
-            is_html=True,
+            message=PLAINTEXT_EMAIL,
+            html_message=EMAIL_TEMPLATE,
+            to=[('To Example', 'to@example.com'), 'you@example.com'],
             cc='him@example.com, her@example.com',
             bcc=[
                 'them@example.com',
@@ -79,7 +85,7 @@ class MailTestCase(unittest.TestCase):
             reply_to='no-reply@example.com',
             attachments=[
                 os.path.abspath(os.path.dirname(__file__)) + '/LICENSE',
-                os.path.abspath(os.path.dirname(__file__)) + '/README.md'
+                os.path.abspath(os.path.dirname(__file__)) + '/README.rst'
             ],
             host=host,
             port=port,

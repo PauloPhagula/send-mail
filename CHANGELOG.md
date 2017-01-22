@@ -3,6 +3,17 @@
 For a complete view of all the releases, visit the releases page on GitHub:
 [https://github.com/dareenzo/send_mail/releases](https://github.com/dareenzo/send_mail/releases)
 
+## v1.0.0 - 2017-01-22
+
+- Breaking changes
+  - Changed `send_mail` function signature to take subject as first and
+    only mandatory parameter.
+  - plain-text message must be passed in `message` and html in `html_message`
+  - `logger` is no longer created within the `send_mail` but instead if passed
+    as a keyword paramter. In it's absence messages are not logged
+- Improve module documentation
+- Require at least one destination address
+
 ## v0.3.0 - 2017-01-13
 
 - Allow debugging

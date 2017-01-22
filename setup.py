@@ -22,11 +22,11 @@ def file_get_contents(filename):
     return codecs.open(filename, 'r', 'utf-8').read()
 
 SETUP_DIR = os.path.abspath(os.path.dirname(__file__))
-LONG_DESCRIPTION = '\n'.join([file_get_contents('README.md'), file_get_contents('CHANGELOG.md')])
+LONG_DESCRIPTION = '\n'.join([file_get_contents('README.rst'), file_get_contents('CHANGELOG.md')])
 
 setup(
     name='send_mail',
-    version='0.3.0',
+    version='1.0.0',
     description='Simple email sending module for use in ETL/reporting script.',
     long_description=LONG_DESCRIPTION,
     url='https://github.com/dareenzo/send_mail',

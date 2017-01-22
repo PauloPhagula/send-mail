@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>send_mail 0.3.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="nav-item nav-item-0"><a href="index.html#document-index">send_mail 0.3.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html#document-index">Table Of Contents</a></h3>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-api">send_mail</a></li>
+</ul>
+
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="send-mail">
+<h1>send_mail<a class="headerlink" href="#send-mail" title="Permalink to this headline">¶</a></h1>
+<p>e-mail sending module.</p>
+<div class="section" id="code-example">
+<h2>Code Example<a class="headerlink" href="#code-example" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">PLAINTEXT_EMAIL</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Yo...</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">send_mail</span><span class="p">(</span>
+    <span class="s1">&#39;[AwesomeApp] very descriptive subject&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">PLAINTEXT_EMAIL</span><span class="p">,</span>
+    <span class="n">to</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;To Example&#39;</span><span class="p">,</span> <span class="s1">&#39;to@example.com&#39;</span><span class="p">),</span> <span class="s1">&#39;you@example.com&#39;</span><span class="p">],</span>
+    <span class="n">cc</span><span class="o">=</span><span class="s1">&#39;him@example.com, her@example.com&#39;</span><span class="p">,</span>
+    <span class="n">bcc</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;them@example.com&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;You Know Who&#39;</span><span class="p">,</span> <span class="s1">&#39;youknowwho@example.com&#39;</span><span class="p">)],</span>
+    <span class="n">sender</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;AwesomeApp&#39;</span><span class="p">,</span> <span class="s1">&#39;notifications@example.com&#39;</span><span class="p">),</span>
+    <span class="n">reply_to</span><span class="o">=</span><span class="s1">&#39;no-reply@example.com&#39;</span><span class="p">,</span>
+    <span class="n">attachments</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;/full/path/to/attachment.ext&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">In order to send the e-mail the function requires your server details.
+You can put these details in
+<code class="docutils literal"><span class="pre">SMTP_HOST,</span> <span class="pre">SMTP_PORT,</span> <span class="pre">SMTP_USERNAME,</span> <span class="pre">SMTP_PASSWORD,</span> <span class="pre">SMTP_USE_SSL</span> <span class="pre">&amp;</span> <span class="pre">SMTP_USE_TLS</span></code>
+environment variables, or pass them as keyword arguments without the
+<em>smpt_</em> prefix.</p>
+</div>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>You can install this module directly from github with</p>
+<p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">git+https://github.com/dareenzo/send_mail&#64;v0.3.0#egg=send_mail</span></code></p>
+</div>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>Unit tests are provided with the code and you can run them by copying
+the <code class="docutils literal"><span class="pre">.env.example</span></code> file into a <code class="docutils literal"><span class="pre">.env</span></code> file on the root of the
+project.</p>
+<p>The <code class="docutils literal"><span class="pre">.env</span></code> file contains the required environment variables for the
+module. So update it with your own settings.
+These setting will be read by the <code class="docutils literal"><span class="pre">cheap_dot_env</span></code> function into
+environment variables before each test so that the <code class="docutils literal"><span class="pre">send_mail</span></code>
+function can work properly</p>
+<div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>cp .env.example .env
+<span class="c1"># edit .env file with your mail settings</span>
+pip install -r requirements/test.txt
+tox
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="documentation-generation">
+<h2>Documentation Generation<a class="headerlink" href="#documentation-generation" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># edit documentation in _docs</span>
+<span class="nb">cd</span> _docs
+make singlehtml
+<span class="nb">cd</span> ..
+cp -fR _docs/_build/singlehtml/* docs/
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="copyright-license">
+<h2>Copyright &amp; License<a class="headerlink" href="#copyright-license" title="Permalink to this headline">¶</a></h2>
+<p>Code and documentation are available according to the MIT License.</p>
+<p>See the <a class="reference external" href="http://www.github.com/dareenzo/send_mail/blob/master/LICENSE">LICENSE</a> file for details.</p>
+</div>
+<div class="section" id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
+<p>If you are looking for information on a specific function, class or
+method, this part of the documentation is for you</p>
+<div class="toctree-wrapper compound">
+<span id="document-api"></span><span class="target" id="module-send_mail"></span><div class="section" id="send-mail">
+<h3>send_mail<a class="headerlink" href="#send-mail" title="Permalink to this headline">¶</a></h3>
+<p>Email sending module for scripts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">Copyright 2017 by Paulo Phagula.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">MIT, see LICENSE for details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="send_mail.is_valid_mail_address">
+<code class="descclassname">send_mail.</code><code class="descname">is_valid_mail_address</code><span class="sig-paren">(</span><em>address</em><span class="sig-paren">)</span><a class="headerlink" href="#send_mail.is_valid_mail_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies if email address is valid</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="send_mail.parse_mail_address">
+<code class="descclassname">send_mail.</code><code class="descname">parse_mail_address</code><span class="sig-paren">(</span><em>address</em><span class="sig-paren">)</span><a class="headerlink" href="#send_mail.parse_mail_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes email address into parseable format</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="send_mail.parse_multiple_mail_addresses">
+<code class="descclassname">send_mail.</code><code class="descname">parse_multiple_mail_addresses</code><span class="sig-paren">(</span><em>addresses</em><span class="sig-paren">)</span><a class="headerlink" href="#send_mail.parse_multiple_mail_addresses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses multiple mail addresses into final format</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="send_mail.send_mail">
+<code class="descclassname">send_mail.</code><code class="descname">send_mail</code><span class="sig-paren">(</span><em>subject</em>, <em>message=u''</em>, <em>html_message=u''</em>, <em>to=None</em>, <em>cc=None</em>, <em>bcc=None</em>, <em>sender=None</em>, <em>reply_to=None</em>, <em>attachments=None</em>, <em>custom_headers=None</em>, <em>logger=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#send_mail.send_mail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send an outgoing email with the given parameters.</p>
+<p>Single emails addresses can be provided a string <cite>&#8216;email&#64;example.com&#8217;</cite>
+or tuples <cite>(&#8216;Example&#8217;, &#8216;email&#64;example.com&#8217;&#8216;)</cite></p>
+<p>Multiple email addresses can be provided CSV <cite>&#8216;email&#64;example.com, email2&#64;example.com&#8217;</cite>
+or lists mixing singular address style <cite>[&#8216;email&#64;example.com&#8217;, (Example, email&#64;example.com)]</cite></p>
+<p>By default emails are considered to be in plain-text format, but one
+can change them to HTML by passing <cite>is_html=True</cite>.</p>
+<p>When sending an HTML email a plain-text fallback can be provided
+with the <cite>text</cite> parameter, and if a fallback is not provided the
+conversion will be done for you based on the HTML message.</p>
+<p>Attachments can be passed as a CSV string with full paths to the
+desired files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>subject</strong> (<code class="xref py py-obj docutils literal"><span class="pre">str</span></code>) &#8211; Subject line for this e-mail message.</li>
+<li><strong>message</strong> (<code class="xref py py-obj docutils literal"><span class="pre">str</span></code>) &#8211; Plain-text message body.</li>
+<li><strong>message_html</strong> (<code class="xref py py-obj docutils literal"><span class="pre">str</span></code>) &#8211; HTML message body.</li>
+<li><strong>to</strong> &#8211; Recipients address collection</li>
+<li><strong>cc</strong> &#8211; Carbon Copy (CC) recipients address collection</li>
+<li><strong>bcc</strong> &#8211; Blind Carbon Copy (BCC) recipients address collection</li>
+<li><strong>sender</strong> &#8211; Sender email address as it appears in the &#8216;From&#8217; email line.</li>
+<li><strong>reply_to</strong> &#8211; List of addresses to reply to for the mail message.</li>
+<li><strong>attachments</strong> &#8211; Attachments collection used to store data
+attached to this e-mail message.</li>
+<li><strong>custom_headers</strong> (<code class="xref py py-obj docutils literal"><span class="pre">dict</span></code>, optional) &#8211; Custom Headers to be added to the mail.</li>
+<li><strong>logger</strong> (<code class="xref py py-obj docutils literal"><span class="pre">logging.Logger</span></code>,optional) &#8211; Logger instance for logging
+error and debug messages.</li>
+<li><strong>**kwargs</strong> &#8211; <p>Arbitrary keywords arguments</p>
+<p>If any of them is not provided they will be taken from
+their environment variables equivalents (SMTP_&lt;KEYWORD&gt;) or
+use default values.</p>
+<ul>
+<li>host (<code class="xref py py-obj docutils literal"><span class="pre">str</span></code>, optional): mail server host. If not given uses <span class="target" id="index-0"></span><a class="reference internal" href="#envvar-SMTP_HOST"><code class="xref std std-envvar docutils literal"><span class="pre">SMTP_HOST</span></code></a>.</li>
+<li>port (<code class="xref py py-obj docutils literal"><span class="pre">str</span></code> or <code class="xref py py-obj docutils literal"><span class="pre">int</span></code>, optional): mail server port. If not given uses <span class="target" id="index-1"></span><a class="reference internal" href="#envvar-SMTP_PORT"><code class="xref std std-envvar docutils literal"><span class="pre">SMTP_PORT</span></code></a>.</li>
+<li>username (<code class="xref py py-obj docutils literal"><span class="pre">str</span></code>, optional): mail server password. If not given uses <span class="target" id="index-2"></span><a class="reference internal" href="#envvar-SMTP_USERNAME"><code class="xref std std-envvar docutils literal"><span class="pre">SMTP_USERNAME</span></code></a>.</li>
+<li>password (<code class="xref py py-obj docutils literal"><span class="pre">str</span></code>, optional): mail server password. If not given uses <span class="target" id="index-3"></span><a class="reference internal" href="#envvar-SMTP_PASSWORD"><code class="xref std std-envvar docutils literal"><span class="pre">SMTP_PASSWORD</span></code></a>.</li>
+<li>use_tls (<code class="xref py py-obj docutils literal"><span class="pre">bool</span></code>, optional): connect using TLS flag. If not given uses <span class="target" id="index-4"></span><a class="reference internal" href="#envvar-SMTP_USE_TLS"><code class="xref std std-envvar docutils literal"><span class="pre">SMTP_USE_TLS</span></code></a>. Defaults to False</li>
+<li>use_ssl (<code class="xref py py-obj docutils literal"><span class="pre">bool</span></code>, optional): connect using SSL flag. If not given uses <span class="target" id="index-5"></span><a class="reference internal" href="#envvar-SMTP_USE_SSL"><code class="xref std std-envvar docutils literal"><span class="pre">SMTP_USE_SSL</span></code></a>.  Defaults to False</li>
+<li>debug (<code class="xref py py-obj docutils literal"><span class="pre">bool</span></code>, optional): debug mode enabling flag. If not given uses <span class="target" id="index-6"></span><a class="reference internal" href="#envvar-SMTP_DEBUG"><code class="xref std std-envvar docutils literal"><span class="pre">SMTP_DEBUG</span></code></a>.Defaults to False</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> &#8211; if no recepient is given or no message is given.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="envvar">
+<dt id="envvar-SMTP_HOST">
+<code class="descname">SMTP_HOST</code><a class="headerlink" href="#envvar-SMTP_HOST" title="Permalink to this definition">¶</a></dt>
+<dt id="envvar-Mailserverhost.">
+<code class="descname">Mail server host.</code><a class="headerlink" href="#envvar-Mailserverhost." title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="envvar">
+<dt id="envvar-SMTP_PORT">
+<code class="descname">SMTP_PORT</code><a class="headerlink" href="#envvar-SMTP_PORT" title="Permalink to this definition">¶</a></dt>
+<dt id="envvar-Mailserverport.">
+<code class="descname">Mail server port.</code><a class="headerlink" href="#envvar-Mailserverport." title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="envvar">
+<dt id="envvar-SMTP_USERNAME">
+<code class="descname">SMTP_USERNAME</code><a class="headerlink" href="#envvar-SMTP_USERNAME" title="Permalink to this definition">¶</a></dt>
+<dt id="envvar-Mailserverusernameforlogin.">
+<code class="descname">Mail server username for login.</code><a class="headerlink" href="#envvar-Mailserverusernameforlogin." title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="envvar">
+<dt id="envvar-SMTP_PASSWORD">
+<code class="descname">SMTP_PASSWORD</code><a class="headerlink" href="#envvar-SMTP_PASSWORD" title="Permalink to this definition">¶</a></dt>
+<dt id="envvar-Mailserverpasswordforlogin.">
+<code class="descname">Mail server password for login.</code><a class="headerlink" href="#envvar-Mailserverpasswordforlogin." title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="envvar">
+<dt id="envvar-SMTP_USE_TLS">
+<code class="descname">SMTP_USE_TLS</code><a class="headerlink" href="#envvar-SMTP_USE_TLS" title="Permalink to this definition">¶</a></dt>
+<dt id="envvar-FlagindicatingifconnectionshouldbemadeusingTLS.">
+<code class="descname">Flag indicating if connection should be made using TLS.</code><a class="headerlink" href="#envvar-FlagindicatingifconnectionshouldbemadeusingTLS." title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="envvar">
+<dt id="envvar-SMTP_USE_SSL">
+<code class="descname">SMTP_USE_SSL</code><a class="headerlink" href="#envvar-SMTP_USE_SSL" title="Permalink to this definition">¶</a></dt>
+<dt id="envvar-FlagindicatingifconnectiontoservershouldbemadeusingSSL.">
+<code class="descname">Flag indicating if connection to server should be made using SSL.</code><a class="headerlink" href="#envvar-FlagindicatingifconnectiontoservershouldbemadeusingSSL." title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="envvar">
+<dt id="envvar-SMTP_DEBUG">
+<code class="descname">SMTP_DEBUG</code><a class="headerlink" href="#envvar-SMTP_DEBUG" title="Permalink to this definition">¶</a></dt>
+<dt id="envvar-Flagindicatingifdebugmodeisenabled.abs">
+<code class="descname">Flag indicating if debug mode is enabled.abs</code><a class="headerlink" href="#envvar-Flagindicatingifdebugmodeisenabled.abs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="admonition-todo admonition" id="index-7">
+<p class="first admonition-title">Todo</p>
+<p class="last">Allow many addresses in <cite>reply_to</cite></p>
+</div>
+</dd></dl>
+
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="nav-item nav-item-0"><a href="index.html#document-index">send_mail 0.3.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Paulo Phagula.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>
