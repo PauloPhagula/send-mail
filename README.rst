@@ -68,7 +68,6 @@ environment variables before each test so that the ``send_mail``
 function can work properly
 
 .. code-block:: sh
-    :linenos:
 
     cp .env.example .env
     # edit .env file with your mail settings
@@ -79,7 +78,6 @@ Documentation Generation
 =========================
 
 .. code-block:: sh
-    :linenos:
 
     # edit documentation in _docs
     cd _docs
