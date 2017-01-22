@@ -3,7 +3,7 @@ send_mail
 **********
 
 .. image:: https://img.shields.io/github/release/dareenzo/send_mail.svg
-    :target:
+    :target: https://github.com/dareenzo/send_mail/releases
 
 .. image:: https://travis-ci.org/dareenzo/send_mail.svg?branch=master
     :target: https://travis-ci.org/dareenzo/send_mail
@@ -12,9 +12,10 @@ send_mail
     :target: https://coveralls.io/github/dareenzo/send_mail?branch=master
 
 .. image:: https://img.shields.io/github/license/dareenzo/send_mail.svg
-    :target:
+    :target: https://github.com/dareenzo/send_mail/blob/master/LICENSE
 
 .. _LICENSE: http://www.github.com/dareenzo/send_mail/blob/master/LICENSE
+
 
 e-mail sending module.
 
