@@ -2,6 +2,20 @@
 send_mail
 **********
 
+.. image:: https://img.shields.io/github/release/dareenzo/send_mail.svg
+    :target:
+
+.. image:: https://travis-ci.org/dareenzo/send_mail.svg?branch=master
+    :target: https://travis-ci.org/dareenzo/send_mail
+
+.. image:: https://coveralls.io/repos/github/dareenzo/send_mail/badge.svg?branch=master
+    :target: https://coveralls.io/github/dareenzo/send_mail?branch=master
+
+.. image:: https://img.shields.io/github/license/dareenzo/send_mail.svg
+    :target:
+
+.. _LICENSE: http://www.github.com/dareenzo/send_mail/blob/master/LICENSE
+
 e-mail sending module.
 
 Code Example
@@ -78,5 +92,3 @@ Copyright & License
 Code and documentation are available according to the MIT License.
 
 See the `LICENSE`_ file for details.
-
-.. _LICENSE: http://www.github.com/dareenzo/send_mail/blob/master/LICENSE
