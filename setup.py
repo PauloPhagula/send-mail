@@ -26,7 +26,7 @@ LONG_DESCRIPTION = '\n'.join([file_get_contents('README.rst'), file_get_contents
 
 setup(
     name='send_mail',
-    version='1.0.0',
+    version='1.0.1',
     description='Simple email sending module for use in ETL/reporting script.',
     long_description=LONG_DESCRIPTION,
     url='https://github.com/dareenzo/send_mail',

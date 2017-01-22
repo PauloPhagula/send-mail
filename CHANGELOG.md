@@ -3,6 +3,10 @@
 For a complete view of all the releases, visit the releases page on GitHub:
 [https://github.com/dareenzo/send_mail/releases](https://github.com/dareenzo/send_mail/releases)
 
+## v1.0.1 - 2017-01-22
+- Only provide `send_mail` method as part of the public API. The rest of the
+  methods stay private
+ 
 ## v1.0.0 - 2017-01-22
 
 - Breaking changes

@@ -52,7 +52,7 @@ Installation
 
 You can install this module directly from github with
 
-``pip install -e git+https://github.com/dareenzo/send_mail@v0.3.0#egg=send_mail``
+``pip install -e git+https://github.com/dareenzo/send_mail@v1.0.1#egg=send_mail``
 
 Testing
 ========
