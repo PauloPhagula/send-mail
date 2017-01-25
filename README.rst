@@ -2,19 +2,19 @@
 send_mail
 **********
 
-.. image:: https://img.shields.io/github/release/dareenzo/send_mail.svg
-    :target: https://github.com/dareenzo/send_mail/releases
+.. image:: https://img.shields.io/github/release/dareenzo/send-mail.svg
+    :target: https://github.com/dareenzo/send-mail/releases
 
-.. image:: https://travis-ci.org/dareenzo/send_mail.svg?branch=master
-    :target: https://travis-ci.org/dareenzo/send_mail
+.. image:: https://travis-ci.org/dareenzo/send-mail.svg?branch=master
+    :target: https://travis-ci.org/dareenzo/send-mail
 
-.. image:: https://coveralls.io/repos/github/dareenzo/send_mail/badge.svg?branch=master
-    :target: https://coveralls.io/github/dareenzo/send_mail?branch=master
+.. image:: https://coveralls.io/repos/github/dareenzo/send-mail/badge.svg?branch=master
+    :target: https://coveralls.io/github/dareenzo/send-mail?branch=master
 
-.. image:: https://img.shields.io/github/license/dareenzo/send_mail.svg
-    :target: https://github.com/dareenzo/send_mail/blob/master/LICENSE
+.. image:: https://img.shields.io/github/license/dareenzo/send-mail.svg
+    :target: https://github.com/dareenzo/send-mail/blob/master/LICENSE
 
-.. _LICENSE: http://www.github.com/dareenzo/send_mail/blob/master/LICENSE
+.. _LICENSE: http://www.github.com/dareenzo/send-mail/blob/master/LICENSE
 
 
 e-mail sending module.
@@ -52,7 +52,7 @@ Installation
 
 You can install this module directly from github with
 
-``pip install -e git+https://github.com/dareenzo/send_mail@v1.0.1#egg=send_mail``
+``pip install -e git+https://github.com/dareenzo/send-mail@v1.0.1#egg=send_mail``
 
 Testing
 ========
