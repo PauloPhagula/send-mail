@@ -23,11 +23,14 @@ if six.PY2:
     from email.MIMEBase import MIMEBase
     from email.MIMEText import MIMEText
     from email import Encoders as encoders
+    from email import charset
 if six.PY3:
     from email.mime.multipart import MIMEMultipart
     from email.mime.base import MIMEBase
     from email.mime.text import MIMEText
     from email import encoders
+    from email import charset
+
 
 
 # least buggy regex from http://www.regular-expressions.info/email.html
@@ -109,7 +112,7 @@ def send_mail(subject,
     Args:
         subject (:obj:`str`): Subject line for this e-mail message.
         message (:obj:`str`): Plain-text message body.
-        message_html (:obj:`str`): HTML message body.
+        html_message (:obj:`str`): HTML message body.
         to: Recipients address collection
         cc: Carbon Copy (CC) recipients address collection
         bcc: Blind Carbon Copy (BCC) recipients address collection
@@ -192,6 +195,10 @@ def send_mail(subject,
     mail = MIMEMultipart()
     body = MIMEMultipart('alternative')
 
+    # Add missing charset email charset and email encodings
+    # https://stackoverflow.com/questions/9403265/how-do-i-use-python-3-2-email-module-to-send-unicode-messages-encoded-in-utf-8-w
+    charset.add_charset('utf-8', charset.QP, charset.QP)
+
     html2text_converter = html2text.HTML2Text()
 
     if sender:
@@ -223,7 +230,7 @@ def send_mail(subject,
         message = html2text_converter.handle(message)
 
     if message:
-        body.attach(MIMEText(message, 'plain', 'utf-8'))
+        body.attach(MIMEText(message, 'plain',  'utf-8'))
 
     if html_message:
         body.attach(MIMEText(html_message, 'html', 'utf-8'))

@@ -33,8 +33,9 @@ def cheap_dot_env(dot_env_path):
                 line = line.strip()
                 if len(line) == 0 or line.startswith(';') or line.startswith('#'):
                     continue
-                var = line.replace('"', '')
-                var = line.strip().split('=')
+                var = line.replace('"', '')\
+                          .strip()\
+                          .split('=', 1)
                 if len(var) == 2:
                     key = var[0]
                     value = var[1].replace('"', '').strip()
@@ -56,11 +57,16 @@ class MailTestCase(unittest.TestCase):
             html_message=EMAIL_TEMPLATE,
             to=[('To Example', 'to@example.com'), 'you@example.com'],
             cc='him@example.com, her@example.com',
-            bcc=['them@example.com', ('You Know Who', 'youknowwho@example.com')],
+            bcc=[
+                'them@example.com',
+                ('You Know Who', 'youknowwho@example.com')
+            ],
             sender=('App', 'notifications@example.com'),
             reply_to='no-reply@example.com',
-            attachments=[os.path.abspath(os.path.dirname(__file__)) + '/LICENSE',
-                         os.path.abspath(os.path.dirname(__file__)) + '/README.rst']
+            attachments=[
+                os.path.abspath(os.path.dirname(__file__)) + '/LICENSE',
+                os.path.abspath(os.path.dirname(__file__)) + '/README.rst'
+            ]
         )
 
     def test_full_email_is_sent_with_details_as_keywords(self):
@@ -93,7 +99,6 @@ class MailTestCase(unittest.TestCase):
             password=password,
             use_tls=use_tls
         )
-
 
 
 if __name__ == '__main__':
