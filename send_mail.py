@@ -195,10 +195,6 @@ def send_mail(subject,
     mail = MIMEMultipart()
     body = MIMEMultipart('alternative')
 
-    # Add missing charset email charset and email encodings
-    # https://stackoverflow.com/questions/9403265/how-do-i-use-python-3-2-email-module-to-send-unicode-messages-encoded-in-utf-8-w
-    charset.add_charset('utf-8', charset.QP, charset.QP)
-
     html2text_converter = html2text.HTML2Text()
 
     if sender:
@@ -228,6 +224,10 @@ def send_mail(subject,
 
     if html_message and not message:
         message = html2text_converter.handle(message)
+
+    # Add missing charset email charset and email encodings
+    # https://stackoverflow.com/questions/9403265/how-do-i-use-python-3-2-email-module-to-send-unicode-messages-encoded-in-utf-8-w
+    charset.add_charset('utf-8', charset.QP, charset.QP)
 
     if message:
         body.attach(MIMEText(message, 'plain',  'utf-8'))
