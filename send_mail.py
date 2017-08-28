@@ -138,7 +138,7 @@ def send_mail(subject,
             - debug (:obj:`bool`, optional): debug mode enabling flag. If not given uses :envvar:`SMTP_DEBUG`.Defaults to False
 
     Raises:
-        ValueError: if no recepient is given or no message is given.
+        ValueError: if no recipient is given or no message is given.
 
     .. envvar:: SMTP_HOST
         Mail server host.
@@ -213,8 +213,7 @@ def send_mail(subject,
     mail['Subject'] = subject
     mail.preamble = subject
 
-    # We must always attach plain text mail before html, otherwise we
-    # break gmail
+    # We must always attach plain text mail before html, otherwise we break gmail
 
     if message and not isinstance(message, six.text_type):
         raise ValueError('message must be a string')

@@ -66,7 +66,8 @@ class MailTestCase(unittest.TestCase):
             attachments=[
                 os.path.abspath(os.path.dirname(__file__)) + '/LICENSE',
                 os.path.abspath(os.path.dirname(__file__)) + '/README.rst'
-            ]
+            ],
+            custom_headers={'X-Mailer': 'SendMail'}
         )
 
     def test_full_email_is_sent_with_details_as_keywords(self):
