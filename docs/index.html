@@ -51,26 +51,27 @@
             
   <div class="section" id="send-mail">
 <h1>send_mail<a class="headerlink" href="#send-mail" title="Permalink to this headline">¶</a></h1>
-<a class="reference external image-reference" href="https://github.com/dareenzo/send_mail/releases"><img alt="https://img.shields.io/github/release/dareenzo/send_mail.svg" src="https://img.shields.io/github/release/dareenzo/send_mail.svg" /></a>
-<a class="reference external image-reference" href="https://travis-ci.org/dareenzo/send_mail"><img alt="https://travis-ci.org/dareenzo/send_mail.svg?branch=master" src="https://travis-ci.org/dareenzo/send_mail.svg?branch=master" /></a>
-<a class="reference external image-reference" href="https://coveralls.io/github/dareenzo/send_mail?branch=master"><img alt="https://coveralls.io/repos/github/dareenzo/send_mail/badge.svg?branch=master" src="https://coveralls.io/repos/github/dareenzo/send_mail/badge.svg?branch=master" /></a>
-<a class="reference external image-reference" href="https://github.com/dareenzo/send_mail/blob/master/LICENSE"><img alt="https://img.shields.io/github/license/dareenzo/send_mail.svg" src="https://img.shields.io/github/license/dareenzo/send_mail.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/dareenzo/send-mail/releases"><img alt="https://img.shields.io/github/release/dareenzo/send-mail.svg" src="https://img.shields.io/github/release/dareenzo/send-mail.svg" /></a>
+<a class="reference external image-reference" href="https://travis-ci.org/dareenzo/send-mail"><img alt="https://travis-ci.org/dareenzo/send-mail.svg?branch=master" src="https://travis-ci.org/dareenzo/send-mail.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://coveralls.io/github/dareenzo/send-mail?branch=master"><img alt="https://coveralls.io/repos/github/dareenzo/send-mail/badge.svg?branch=master" src="https://coveralls.io/repos/github/dareenzo/send-mail/badge.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://github.com/dareenzo/send-mail/blob/master/LICENSE"><img alt="https://img.shields.io/github/license/dareenzo/send-mail.svg" src="https://img.shields.io/github/license/dareenzo/send-mail.svg" /></a>
 <p>e-mail sending module.</p>
 <div class="section" id="code-example">
 <h2>Code Example<a class="headerlink" href="#code-example" title="Permalink to this headline">¶</a></h2>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">PLAINTEXT_EMAIL</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">Yo...</span>
-<span class="s2">&quot;&quot;&quot;</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">PLAINTEXT_EMAIL</span> <span class="o">=</span> <span class="s1">&#39;Yo...&#39;</span>
+<span class="n">HTML_EMAIL</span> <span class="o">=</span> <span class="s1">&#39;&lt;html&gt;...&#39;</span>
 
 <span class="n">send_mail</span><span class="p">(</span>
     <span class="s1">&#39;[AwesomeApp] very descriptive subject&#39;</span><span class="p">,</span>
     <span class="n">message</span><span class="o">=</span><span class="n">PLAINTEXT_EMAIL</span><span class="p">,</span>
+    <span class="n">html_message</span><span class="o">=</span><span class="n">HTML_EMAIL</span><span class="p">,</span>
     <span class="n">to</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;To Example&#39;</span><span class="p">,</span> <span class="s1">&#39;to@example.com&#39;</span><span class="p">),</span> <span class="s1">&#39;you@example.com&#39;</span><span class="p">],</span>
     <span class="n">cc</span><span class="o">=</span><span class="s1">&#39;him@example.com, her@example.com&#39;</span><span class="p">,</span>
     <span class="n">bcc</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;them@example.com&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;You Know Who&#39;</span><span class="p">,</span> <span class="s1">&#39;youknowwho@example.com&#39;</span><span class="p">)],</span>
     <span class="n">sender</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;AwesomeApp&#39;</span><span class="p">,</span> <span class="s1">&#39;notifications@example.com&#39;</span><span class="p">),</span>
     <span class="n">reply_to</span><span class="o">=</span><span class="s1">&#39;no-reply@example.com&#39;</span><span class="p">,</span>
-    <span class="n">attachments</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;/full/path/to/attachment.ext&#39;</span><span class="p">]</span>
+    <span class="n">attachments</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;/full/path/to/attachment.ext&#39;</span><span class="p">],</span>
+    <span class="n">custom_headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;X-Mailer&#39;</span><span class="p">:</span> <span class="s1">&#39;SendMail&#39;</span><span class="p">}</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -86,7 +87,7 @@ environment variables, or pass them as keyword arguments without the
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>You can install this module directly from github with</p>
-<p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">git+https://github.com/dareenzo/send_mail&#64;v0.3.0#egg=send_mail</span></code></p>
+<p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">git+https://github.com/dareenzo/send-mail&#64;v1.0.1#egg=send_mail</span></code></p>
 </div>
 <div class="section" id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
@@ -98,34 +99,27 @@ module. So update it with your own settings.
 These setting will be read by the <code class="docutils literal"><span class="pre">cheap_dot_env</span></code> function into
 environment variables before each test so that the <code class="docutils literal"><span class="pre">send_mail</span></code>
 function can work properly</p>
-<div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>cp .env.example .env
+<div class="highlight-sh"><div class="highlight"><pre><span></span>cp .env.example .env
 <span class="c1"># edit .env file with your mail settings</span>
 pip install -r requirements/test.txt
 tox
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="documentation-generation">
 <h2>Documentation Generation<a class="headerlink" href="#documentation-generation" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-sh"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># edit documentation in _docs</span>
+<div class="highlight-sh"><div class="highlight"><pre><span></span><span class="c1"># edit documentation in _docs</span>
 <span class="nb">cd</span> _docs
 make singlehtml
 <span class="nb">cd</span> ..
 cp -fR _docs/_build/singlehtml/* docs/
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="copyright-license">
 <h2>Copyright &amp; License<a class="headerlink" href="#copyright-license" title="Permalink to this headline">¶</a></h2>
 <p>Code and documentation are available according to the MIT License.</p>
-<p>See the <a class="reference external" href="http://www.github.com/dareenzo/send_mail/blob/master/LICENSE">LICENSE</a> file for details.</p>
+<p>See the <a class="reference external" href="http://www.github.com/dareenzo/send-mail/blob/master/LICENSE">LICENSE</a> file for details.</p>
 </div>
 <div class="section" id="api-reference">
 <h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
@@ -167,7 +161,7 @@ desired files.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>subject</strong> (<code class="xref py py-obj docutils literal"><span class="pre">str</span></code>) &#8211; Subject line for this e-mail message.</li>
 <li><strong>message</strong> (<code class="xref py py-obj docutils literal"><span class="pre">str</span></code>) &#8211; Plain-text message body.</li>
-<li><strong>message_html</strong> (<code class="xref py py-obj docutils literal"><span class="pre">str</span></code>) &#8211; HTML message body.</li>
+<li><strong>html_message</strong> (<code class="xref py py-obj docutils literal"><span class="pre">str</span></code>) &#8211; HTML message body.</li>
 <li><strong>to</strong> &#8211; Recipients address collection</li>
 <li><strong>cc</strong> &#8211; Carbon Copy (CC) recipients address collection</li>
 <li><strong>bcc</strong> &#8211; Blind Carbon Copy (BCC) recipients address collection</li>
@@ -195,7 +189,7 @@ use default values.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> &#8211; if no recepient is given or no message is given.</p>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> &#8211; if no recipient is given or no message is given.</p>
 </td>
 </tr>
 </tbody>

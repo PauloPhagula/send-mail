@@ -20,23 +20,24 @@ send_mail
 e-mail sending module.
 
 Code Example
-==============
+=============
 
 .. code:: python
 
-    PLAINTEXT_EMAIL = """
-    Yo...
-    """
+    PLAINTEXT_EMAIL = 'Yo...'
+    HTML_EMAIL = '<html>...'
 
     send_mail(
         '[AwesomeApp] very descriptive subject',
         message=PLAINTEXT_EMAIL,
+        html_message=HTML_EMAIL,
         to=[('To Example', 'to@example.com'), 'you@example.com'],
         cc='him@example.com, her@example.com',
         bcc=['them@example.com', ('You Know Who', 'youknowwho@example.com')],
         sender=('AwesomeApp', 'notifications@example.com'),
         reply_to='no-reply@example.com',
-        attachments=['/full/path/to/attachment.ext']
+        attachments=['/full/path/to/attachment.ext'],
+        custom_headers={'X-Mailer': 'SendMail'}
     )
 
 .. attention::
