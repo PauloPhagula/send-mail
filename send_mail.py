@@ -13,7 +13,7 @@ from __future__ import unicode_literals, print_function
 import os
 import re
 import smtplib
-from email.utils import COMMASPACE, formatdate, formataddr
+from email.utils import COMMASPACE, formatdate, formataddr, make_msgid
 
 import six
 import html2text
@@ -210,6 +210,7 @@ def send_mail(subject,
         mail['Reply-To'] = formataddr(reply_to)
 
     mail['Date'] = formatdate(localtime=True)
+    mail['Message-ID'] = make_msgid()
     mail['Subject'] = subject
     mail.preamble = subject
 
@@ -229,7 +230,7 @@ def send_mail(subject,
     charset.add_charset('utf-8', charset.QP, charset.QP)
 
     if message:
-        body.attach(MIMEText(message, 'plain',  'utf-8'))
+        body.attach(MIMEText(message, 'plain', 'utf-8'))
 
     if html_message:
         body.attach(MIMEText(html_message, 'html', 'utf-8'))
@@ -293,12 +294,12 @@ def send_mail(subject,
         if debug:
             mail_server.set_debuglevel(1)
 
-        mail_server.ehlo()
+        mail_server.ehlo()  # identify ourselves, prompting server for supported features
 
         if use_tls:
             mail_server.starttls()
+            mail_server.ehlo()  # re-identify ourselves over TLS connection
 
-        mail_server.ehlo()
         mail_server.login(username, password)
         mail_server.sendmail(subject, list(map(lambda x: x[1], all_destinations)), mail.as_string())
         # Should be mailServer.quit(), but that crashes...
