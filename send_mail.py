@@ -6,7 +6,7 @@
 
     Email sending module for scripts.
 
-    :copyright: Copyright 2017 by Paulo Phagula.
+    :copyright: Copyright 2017-2018 by Paulo Phagula.
     :license: MIT, see LICENSE for details.
 """
 from __future__ import unicode_literals, print_function

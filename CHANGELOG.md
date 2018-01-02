@@ -3,6 +3,13 @@
 For a complete view of all the releases, visit the releases page on GitHub:
 [https://github.com/dareenzo/send_mail/releases](https://github.com/dareenzo/send_mail/releases)
 
+## v1.1.0 - 2018-01-02
+
+- Add support for multiple Reply to addresses
+- Add Message-ID header to mails for usage by anti-spam software
+- Send mails with content formatted as quoted-printable
+- Improve documentation
+
 ## v1.0.1 - 2017-01-22
 
 - Only provide `send_mail` method as part of the public API. The rest of the
