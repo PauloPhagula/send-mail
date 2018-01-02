@@ -62,7 +62,7 @@ class MailTestCase(unittest.TestCase):
                 ('You Know Who', 'youknowwho@example.com')
             ],
             sender=('App', 'notifications@example.com'),
-            reply_to='no-reply@example.com',
+            reply_to='no-reply@example.com, do-not-reply-@example.com',
             attachments=[
                 os.path.abspath(os.path.dirname(__file__)) + '/LICENSE',
                 os.path.abspath(os.path.dirname(__file__)) + '/README.rst'
@@ -89,7 +89,7 @@ class MailTestCase(unittest.TestCase):
                 ('You Know Who', 'youknowwho@example.com')
             ],
             sender=('App', 'notifications@example.com'),
-            reply_to='no-reply@example.com',
+            reply_to='no-reply@example.com, do-not-reply@example.com',
             attachments=[
                 os.path.abspath(os.path.dirname(__file__)) + '/LICENSE',
                 os.path.abspath(os.path.dirname(__file__)) + '/README.rst'

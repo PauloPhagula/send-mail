@@ -160,9 +160,6 @@ def send_mail(subject,
 
     .. envvar:: SMTP_DEBUG
         Flag indicating if debug mode is enabled.abs
-
-    .. todo::
-        Allow many addresses in `reply_to`
     """
 
     # 1. Parse and Validate Email Addresses
@@ -171,7 +168,7 @@ def send_mail(subject,
         sender = _parse_mail_address(sender)
 
     if reply_to:
-        reply_to = _parse_mail_address(reply_to)
+        reply_to = _parse_multiple_mail_addresses(reply_to)
 
     all_destinations = []
 
@@ -207,7 +204,7 @@ def send_mail(subject,
         mail['Cc'] = COMMASPACE.join(list(map(formataddr, cc)))
 
     if reply_to:
-        mail['Reply-To'] = formataddr(reply_to)
+        mail['Reply-To'] = COMMASPACE.join(list(map(formataddr, reply_to)))
 
     mail['Date'] = formatdate(localtime=True)
     mail['Message-ID'] = make_msgid()

@@ -35,7 +35,7 @@ Code Example
         cc='him@example.com, her@example.com',
         bcc=['them@example.com', ('You Know Who', 'youknowwho@example.com')],
         sender=('AwesomeApp', 'notifications@example.com'),
-        reply_to='no-reply@example.com',
+        reply_to='no-reply@example.com, do-not-reply@example.com',
         attachments=['/full/path/to/attachment.ext'],
         custom_headers={'X-Mailer': 'SendMail'}
     )
