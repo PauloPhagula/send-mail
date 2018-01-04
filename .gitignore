@@ -13,6 +13,7 @@ Thumbs.db
 # NetBeans project folder
 nbproject
 .idea
+.vscode
 
 *.sw[po]
 *.un~
