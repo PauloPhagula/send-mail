@@ -83,28 +83,23 @@ def _parse_multiple_mail_addresses(addresses):
     return addresses
 
 
-def send_mail(subject,
-              message='', html_message='',
-              to=None, cc=None, bcc=None,
-              sender=None, reply_to=None,
-              attachments=None,
-              custom_headers=None,
-              logger=None,
-              **kwargs):
-    """Send an outgoing email with the given parameters.
+def send_mail(
+        subject,
+        message='', html_message='',
+        to=None, cc=None, bcc=None,
+        sender=None, reply_to=None,
+        attachments=None,
+        custom_headers=None,
+        logger=None,
+        **kwargs
+):
+    """Sends an email.
 
-    Single emails addresses can be provided a string `'email@example.com'`
-    or tuples `('Example', 'email@example.com'')`
+    Single emails addresses can be provided as strings like `'pphagula@gmail.com'`
+    or name-address tuples like `('Paulo Phagula', 'pphagula@gmail.com'')`
 
-    Multiple email addresses can be provided CSV `'email@example.com, email2@example.com'`
+    Multiple email addresses can be provided as CSV strings like `'email@example.com, email2@example.com'`
     or lists mixing singular address style `['email@example.com', (Example, email@example.com)]`
-
-    By default emails are considered to be in plain-text format, but one
-    can change them to HTML by passing `is_html=True`.
-
-    When sending an HTML email a plain-text fallback can be provided
-    with the `text` parameter, and if a fallback is not provided the
-    conversion will be done for you based on the HTML message.
 
     Attachments can be passed as a CSV string with full paths to the
     desired files.
@@ -162,7 +157,7 @@ def send_mail(subject,
         Flag indicating if debug mode is enabled.abs
     """
 
-    # 1. Parse and Validate Email Addresses
+    # 1. Parse and Validate Email details
 
     if sender:
         sender = _parse_mail_address(sender)
@@ -186,6 +181,12 @@ def send_mail(subject,
 
     if len(all_destinations) == 0:
         raise ValueError('At least one recipient must be specified')
+
+    if message and not isinstance(message, six.text_type):
+        raise ValueError('message must be a string')
+
+    if html_message and not isinstance(html_message, six.text_type):
+        raise ValueError('html_message must be a string')
 
     # 2. Setup email object with basic details
 
@@ -211,14 +212,6 @@ def send_mail(subject,
     mail['Subject'] = subject
     mail.preamble = subject
 
-    # We must always attach plain text mail before html, otherwise we break gmail
-
-    if message and not isinstance(message, six.text_type):
-        raise ValueError('message must be a string')
-
-    if html_message and not isinstance(html_message, six.text_type):
-        raise ValueError('message must be a string')
-
     if html_message and not message:
         message = html2text_converter.handle(message)
 
@@ -226,6 +219,7 @@ def send_mail(subject,
     # https://stackoverflow.com/questions/9403265/how-do-i-use-python-3-2-email-module-to-send-unicode-messages-encoded-in-utf-8-w
     charset.add_charset('utf-8', charset.QP, charset.QP)
 
+    # NOTE: We must always attach plain text mail before html, otherwise we'll break Gmail
     if message:
         body.attach(MIMEText(message, 'plain', 'utf-8'))
 
