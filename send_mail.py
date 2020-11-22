@@ -291,7 +291,9 @@ def send_mail(
             mail_server.starttls()
             mail_server.ehlo()  # re-identify ourselves over TLS connection
 
-        mail_server.login(username, password)
+        if username and password:
+            mail_server.login(username, password)
+
         mail_server.sendmail(subject, list(map(lambda x: x[1], all_destinations)), mail.as_string())
         # Should be mailServer.quit(), but that crashes...
         mail_server.close()
